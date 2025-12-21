@@ -1,0 +1,9 @@
+{
+  "RATE_PER_KM": 0.2,
+  "TIME_WINDOW_MIN": 5,
+  "N_CANDIDATES": 2,
+  "MODEL_SAVE_PATH": "dqn_courier_model.pth",
+  "MODEL_LOAD_PATH": "dqn_courier_model.pth",
+  "TEST_EPISODES_PATH": "test_episodes.pkl"
+}
+
