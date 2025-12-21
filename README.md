@@ -42,6 +42,77 @@ The system is split into two pipelines:
 - Adds cost calculation:
 
 
+- Tracks `open_orders` per courier.
+- Generates **synthetic negative candidates** (nearby couriers not chosen).
+- Outputs:
+- `feat_df`: Real (order, courier) attempts with metadata.
+- `feat_df_new`: Real + synthetic candidates.
+- `df_filtered`: Filtered tracking data.
+
+All parameters (`RATE_PER_KM`, `TIME_WINDOW_MIN`, `N_CANDIDATES`) are loaded from JSON config.
+
+---
+
+### 3. `src/util/Predictors.py`
+- **`DQNCourierPredictor`**
+- Inherits from abstract `Model`.
+- Normalizes features:
+  - `cost`
+  - `open_orders`
+  - `hour`
+- Builds **episodes** (one per order) with states, actions, and rewards.
+- Implements:
+  - DQN network: `3 → 64 → 64 → 5`
+  - Replay buffer
+  - ε-greedy exploration
+  - Target network updates
+- Trains for **15 epochs**.
+
+**Saved artifacts:**
+- `dqn_courier_model.pth` (model + normalization stats)
+- `test_episodes.pkl` (held-out test set)
+
+---
+
+### 4. `src/util/RealTimeEvaluation.py`
+- **Inference-only module**
+- Loads:
+- `dqn_courier_model.pth`
+- `test_episodes.pkl`
+- For each test order:
+- Waits `delta_minutes` (default: 5)
+- Finds **top-3 closest available couriers**
+- Builds normalized state
+- Uses **DQN** to select the best courier
+- Compares **predicted cost** vs **historical cost**
+- Reports **percentage cost reduction**
+
+---
+
+### 5. `src/interview_test_final.py`
+- Full training + evaluation pipeline
+- Runs preprocessing → training → saves model and test episodes
+
+---
+
+### 6. `src/interview_test_final_2.py`
+- **Real-time simulation only**
+- No training
+- Fast inference using saved model and episodes
+
+---
+
+### 7. Configuration (`resources/interview-test-final.json`)
+```json
+{
+"RATE_PER_KM": 0.2,
+"TIME_WINDOW_MIN": 5,
+"N_CANDIDATES": 2,
+"MODEL_SAVE_PATH": "dqn_courier_model.pth",
+"MODEL_LOAD_PATH": "dqn_courier_model.pth",
+"TEST_EPISODES_PATH": "test_episodes.pkl"
+}
+
 
 
 
