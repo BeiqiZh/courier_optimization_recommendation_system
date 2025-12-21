@@ -2,7 +2,6 @@ Topic       : Courier Assignment Optimization using Deep Q-Networks (DQN)
 Author      : Beiqi Zhou
 Date        : December 21, 2025
 
-# Background
 ================================================================================
 ## Background
 ================================================================================
@@ -118,6 +117,7 @@ Model total cost:     $      8.28
 Historical cost:      $     71.83
 COST REDUCTION:          88.48%
 ================================================================
+
 
 
 
