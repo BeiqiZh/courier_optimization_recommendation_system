@@ -89,19 +89,6 @@ All parameters (`RATE_PER_KM`, `TIME_WINDOW_MIN`, `N_CANDIDATES`) are loaded fro
 
 ---
 
-### 5. `src/interview_test_final.py`
-- Full training + evaluation pipeline
-- Runs preprocessing → training → saves model and test episodes
-
----
-
-### 6. `src/interview_test_final_2.py`
-- **Real-time simulation only**
-- No training
-- Fast inference using saved model and episodes
-
----
-
 ### 7. Configuration (`resources/interview-test-final.json`)
 ```json
 {
