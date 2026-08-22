@@ -89,7 +89,7 @@ All parameters (`RATE_PER_KM`, `TIME_WINDOW_MIN`, `N_CANDIDATES`) are loaded fro
 
 ---
 
-### 7. Configuration (`resources/interview-test-final.json`)
+### 7. Configuration (`resources/test-final.json`)
 ```json
 {
 "RATE_PER_KM": 0.2,
